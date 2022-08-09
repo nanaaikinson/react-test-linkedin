@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Chat } from "./components/Chat";
 import { UsernameInput } from "./components/UsernameInput";
 
 function App() {
@@ -16,9 +17,11 @@ function App() {
   };
 
   return (
-    <>
-      {username ? <>App</> : <UsernameInput updateUsername={updateUsername} />}
-    </>
+    // <>
+    //   {username ? <Chart /> : <UsernameInput updateUsername={updateUsername} />}
+    // </>
+
+    <Chat />
   );
 }
 

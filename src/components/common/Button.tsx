@@ -1,13 +1,18 @@
 import { FC } from "react";
+import classNames from "classnames";
 
 type Props = {
   type: "submit" | "reset" | "button";
   label: string;
+  disabled?: boolean;
+  className?: string;
 };
 
-export const Button: FC<Props> = ({ label, type }) => {
+export const Button: FC<Props> = ({ label, type, disabled, className }) => {
+  const buttonClassNames = classNames("btn btn-primary", className);
+
   return (
-    <button className="btn btn-primary" type={type}>
+    <button className={buttonClassNames} type={type} disabled={disabled}>
       {label}
     </button>
   );
