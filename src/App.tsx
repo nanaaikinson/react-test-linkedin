@@ -1,27 +1,18 @@
-import { useEffect, useState } from "react";
-import { Chat } from "./components/Chat";
+import { Chats } from "./components/chat/Chats";
 import { UsernameInput } from "./components/UsernameInput";
+import { useChatStore } from "./stores/chatStore";
 
 function App() {
-  const [username, setUsername] = useState("");
-
-  // Use Effect
-  // Mounted
-  useEffect(() => {
-    console.log(username);
-  }, [username]);
+  const user = useChatStore((state) => state.user);
+  const setUser = useChatStore((state) => state.setUser);
 
   // Methods
   const updateUsername = (name: string) => {
-    setUsername(name);
+    setUser(name);
   };
 
   return (
-    // <>
-    //   {username ? <Chart /> : <UsernameInput updateUsername={updateUsername} />}
-    // </>
-
-    <Chat />
+    <>{user ? <Chats /> : <UsernameInput updateUsername={updateUsername} />}</>
   );
 }
 

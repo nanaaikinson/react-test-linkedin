@@ -1,30 +1,20 @@
 import { FC, FormEvent, useState } from "react";
-import { Avatar } from "./common/Avatar";
-import { Button } from "./common/Button";
-import { Input } from "./common/Input";
+import { useChatStore } from "../../stores/chatStore";
+import { Button } from "../common/Button";
+import { Input } from "../common/Input";
+import { Chat } from "./Chat";
 
-export const Chat: FC = () => {
+export const Chats: FC = () => {
   // Data
   const [message, setMessage] = useState<string>("");
-  const messages = [
-    { id: 1, me: true, text: "JA" },
-    { id: 2, me: true, text: "JA" },
-    { id: 3, me: false, text: "NO" },
-    { id: 4, me: true, text: "JA" },
-    { id: 5, me: false, text: "EB" },
-    { id: 6, me: false, text: "EB" },
-    { id: 7, me: false, text: "EB" },
-    { id: 8, me: false, text: "EB" },
-    { id: 9, me: false, text: "EB" },
-    { id: 10, me: false, text: "EB" },
-    { id: 11, me: false, text: "EB" },
-  ];
+  const messages = useChatStore((state) => state.messages);
+  const addMessage = useChatStore((state) => state.addMessage);
 
   // Methods
   const submitMessage = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log(message);
+    addMessage(message);
     setMessage("");
   };
 
@@ -37,21 +27,8 @@ export const Chat: FC = () => {
             style={{ contain: "content" }}
           >
             <div className="px-5 py-10 space-y-8 h-full w-full overflow-y-auto">
-              {messages.map((record, index) => (
-                <div
-                  className={
-                    record.me
-                      ? "flex flex-row-reverse space-x-2 space-x-reverse"
-                      : "flex flex-row space-x-2"
-                  }
-                  key={index}
-                >
-                  <Avatar text={record.text} />
-                  <div className="bg-gray-200 rounded-lg p-4 mt-8">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Eveniet, magni?
-                  </div>
-                </div>
+              {messages.map((record) => (
+                <Chat record={record} key={record.id} />
               ))}
             </div>
 
