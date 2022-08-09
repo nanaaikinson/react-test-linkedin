@@ -7,6 +7,7 @@ import { Chat } from "./Chat";
 export const Chats: FC = () => {
   // Data
   const [message, setMessage] = useState<string>("");
+  const user = useChatStore((state) => state.user);
   const messages = useChatStore((state) => state.messages);
   const addMessage = useChatStore((state) => state.addMessage);
 
@@ -23,10 +24,14 @@ export const Chats: FC = () => {
       <div className="row justify-center">
         <div className="col-12 sm:col-8 lg:col-7 xl:col-4">
           <div
-            className="flex w-full h-screen border border-gray-200"
+            className="flex w-full h-screen border border-gray-50"
             style={{ contain: "content" }}
           >
-            <div className="px-5 py-10 space-y-8 h-full w-full overflow-y-auto">
+            <nav className="fixed top-0 w-full py-3 px-5 bg-primary text-white">
+              <div className="capitalize font-semibold">{user}</div>
+            </nav>
+
+            <div className="px-5 pb-10 pt-14 space-y-8 h-full w-full overflow-y-auto">
               {messages.map((record) => (
                 <Chat record={record} key={record.id} />
               ))}
