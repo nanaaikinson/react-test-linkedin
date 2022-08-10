@@ -6,8 +6,12 @@ export interface IMessage {
 }
 
 export interface IChatStore {
-  user: string;
-  setUser: (payload: string) => void;
   messages: Array<IMessage>;
-  addMessage: (payload: string) => void;
+  addMessage: (message: string, user: string) => void;
+}
+
+export interface IBroacastMessage {
+  tabId: string;
+  message: string;
+  user: string;
 }

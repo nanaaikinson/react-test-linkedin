@@ -1,7 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Avatar } from "../common/Avatar";
 import { IMessage } from "../../types";
-import { useChatStore } from "../../stores/chatStore";
 import classNames from "classnames";
 import { initialsGenerator } from "../../utils/functions";
 
@@ -10,8 +9,13 @@ type Props = {
 };
 
 export const Chat: FC<Props> = ({ record }) => {
-  const user = useChatStore((state) => state.user);
-  const userInitials = initialsGenerator(user);
+  const [user, setUser] = useState<string | undefined>(undefined);
+  const userInitials = initialsGenerator(record.user);
+
+  useEffect(() => {
+    const sessionUser = sessionStorage.getItem("user") ?? "";
+    setUser(sessionUser);
+  }, []);
 
   const chatClassNames = classNames(
     "flex",

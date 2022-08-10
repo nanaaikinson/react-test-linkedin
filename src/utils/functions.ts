@@ -1,7 +1,7 @@
 import compact from "lodash/compact";
 
 export const initialsGenerator = (str: string): string => {
-  if (!str.toString()) return "";
+  if (!str.toString() || str.length === 0) return "";
 
   const exploded = str.split(" ");
   const arr = compact(exploded);
