@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect, useState } from "react";
 import { BroadcastChannel } from "broadcast-channel";
 import { useChatStore } from "../../stores/chatStore";
-import { IBroacastMessage, IMessage } from "../../types";
+import { IBroacastMessage, IChatStore, IMessage } from "../../types";
 import { Button } from "../common/Button";
 import { Input } from "../common/Input";
 import { Chat } from "./Chat";
@@ -13,7 +13,9 @@ export const Chats: FC = () => {
   const [message, setMessage] = useState<string>("");
   const [tab, setTab] = useState<string>("");
   const [user, setUser] = useState<string | undefined>(undefined);
+  // @ts-ignore
   const chatMessages = useChatStore((state) => state.messages);
+  // @ts-ignore
   const addMessage = useChatStore((state) => state.addMessage);
 
   useEffect(() => {
@@ -23,12 +25,12 @@ export const Chats: FC = () => {
     setUser(sessionUser);
     setTab(tabId);
 
-    // Listeb broadcast message
+    // Listen broadcast message
     channel.onmessage = (data: IBroacastMessage) => onBroadcastMessage(data);
   }, []);
 
   // Methods
-  const submitMessage = (e: FormEvent) => {
+  const submitMessage = async (e: FormEvent) => {
     e.preventDefault();
 
     const data: IBroacastMessage = {
@@ -37,7 +39,7 @@ export const Chats: FC = () => {
       user: user as string,
     };
 
-    channel.postMessage(data);
+    await channel.postMessage(data);
     setMessage("");
   };
   const onBroadcastMessage = (data: IBroacastMessage) => {
